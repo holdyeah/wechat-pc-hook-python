@@ -166,10 +166,15 @@ def tick():
         print("没有 token，获取token")
         get_token()
 
+def tick1():
+    os.system('cls')
+
 if __name__ == "__main__":
     scheduler = BackgroundScheduler()
     # 间隔3秒钟执行一次
     scheduler.add_job(tick, 'interval', seconds=3)
+    # 间隔300秒钟执行一次
+    scheduler.add_job(tick1, 'interval', seconds=300)
     scheduler.start()
     print('Press Ctrl+{0} to exit'.format('Break' if os.name == 'nt' else 'C'))
     try:
