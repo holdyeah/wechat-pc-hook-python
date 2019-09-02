@@ -152,7 +152,7 @@ def write_txt():
 
 def tick():
     print("tick")
-    if len(get_token()):
+    if len(string_token):
         print("有 token")
         status_code,infos_response = get_infos()
         if status_code == 200:
