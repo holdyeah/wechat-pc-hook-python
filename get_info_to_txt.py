@@ -67,7 +67,7 @@ def get_infos():
         "token": string_token[0],
     }
     infos_response=session.post(con_url,headers=con_headers,data=json.dumps(con_search),timeout = 20)
-    return infos_response.status_code,infos_response
+    return len(infos_response.json()),infos_response
 
 def decide_infos(infos_response):
     print("判断 infos 是否有新")
@@ -155,7 +155,7 @@ def tick():
     if len(string_token):
         print("有 token")
         status_code,infos_response = get_infos()
-        if status_code == 200:
+        if status_code == 3:
             print("token 可以用")
             queue.put(decide_infos(infos_response))
 
