@@ -1,0 +1,14 @@
+﻿  stdafx.cpp
+  dllmain.cpp
+c:\users\wx\source\repos\sendmessage\sendmessage\dllmain.cpp(61): warning C4553: “==”: 未使用表达式结果；是否打算使用“=”?
+c:\users\wx\source\repos\sendmessage\sendmessage\dllmain.cpp(62): warning C4553: “==”: 未使用表达式结果；是否打算使用“=”?
+  SendMessage.cpp
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(85): warning C4477: “swprintf_s”: 格式字符串“%s”需要类型“wchar_t *”的参数，但可变参数 2 拥有了类型“LPVOID”
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(85): warning C4477: “swprintf_s”: 格式字符串“%s”需要类型“wchar_t *”的参数，但可变参数 3 拥有了类型“LPVOID”
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(89): warning C4477: “swprintf_s”: 格式字符串“%s”需要类型“wchar_t *”的参数，但可变参数 2 拥有了类型“LPVOID”
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(89): warning C4477: “swprintf_s”: 格式字符串“%s”需要类型“wchar_t *”的参数，但可变参数 3 拥有了类型“LPVOID”
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(89): warning C4477: “swprintf_s”: 格式字符串“%s”需要类型“wchar_t *”的参数，但可变参数 4 拥有了类型“LPVOID”
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(166): warning C4477: “swprintf_s”: 格式字符串“%p”需要类型“void *”的参数，但可变参数 1 拥有了类型“DWORD”
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(171): warning C4477: “swprintf_s”: 格式字符串“%p”需要类型“void *”的参数，但可变参数 1 拥有了类型“DWORD”
+  正在生成代码...
+  SendMessage.vcxproj -> C:\Users\wx\source\repos\SendMessage\Debug\SendMessage.dll

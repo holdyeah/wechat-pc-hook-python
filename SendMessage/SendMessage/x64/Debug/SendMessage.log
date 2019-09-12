@@ -1,0 +1,41 @@
+﻿  stdafx.cpp
+  dllmain.cpp
+c:\users\wx\source\repos\sendmessage\sendmessage\dllmain.cpp(33): warning C4244: “return”: 从“INT_PTR”转换到“DWORD”，可能丢失数据
+c:\users\wx\source\repos\sendmessage\sendmessage\dllmain.cpp(56): error C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\stdio.h(208): note: 参见“fopen”的声明
+c:\users\wx\source\repos\sendmessage\sendmessage\dllmain.cpp(65): error C4996: 'mbstowcs': This function or variable may be unsafe. Consider using mbstowcs_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\stdlib.h(927): note: 参见“mbstowcs”的声明
+  SendMessage.cpp
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(17): warning C4311: “类型强制转换”: 从“HMODULE”到“DWORD”的指针截断
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(17): warning C4302: “类型强制转换”: 从“HMODULE”到“DWORD”截断
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(27): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(28): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(32): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(33): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(39): error C4235: 使用了非标准扩展: 不支持在此结构上使用“__asm”关键字
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(41): error C2065: “mov”: 未声明的标识符
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(41): error C2146: 语法错误: 缺少“;”(在标识符“edx”的前面)
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(41): error C2065: “edx”: 未声明的标识符
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(42): error C2065: “push”: 未声明的标识符
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(42): error C2143: 语法错误: 缺少“;”(在“常数”的前面)
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(43): error C2065: “mov”: 未声明的标识符
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(43): error C2146: 语法错误: 缺少“;”(在标识符“eax”的前面)
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(43): error C2065: “eax”: 未声明的标识符
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(44): error C2065: “push”: 未声明的标识符
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(44): error C2146: 语法错误: 缺少“;”(在标识符“eax”的前面)
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(44): error C2065: “eax”: 未声明的标识符
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(45): error C2065: “mov”: 未声明的标识符
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(45): error C2146: 语法错误: 缺少“;”(在标识符“ebx”的前面)
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(45): error C2065: “ebx”: 未声明的标识符
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(46): error C2065: “push”: 未声明的标识符
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(46): error C2146: 语法错误: 缺少“;”(在标识符“ebx”的前面)
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(46): error C2065: “ebx”: 未声明的标识符
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(47): error C2065: “lea”: 未声明的标识符
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(47): error C2146: 语法错误: 缺少“;”(在标识符“ecx”的前面)
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(47): error C2065: “ecx”: 未声明的标识符
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(48): error C2065: “call”: 未声明的标识符
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(48): error C2146: 语法错误: 缺少“;”(在标识符“sendCall”的前面)
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(49): error C2065: “add”: 未声明的标识符
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(49): error C2146: 语法错误: 缺少“;”(在标识符“esp”的前面)
+c:\users\wx\source\repos\sendmessage\sendmessage\sendmessage.cpp(49): error C2065: “esp”: 未声明的标识符
+  正在生成代码...

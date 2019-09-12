@@ -161,6 +161,7 @@ def tick():
 
         else:
             print("token 不可以用")
+            string_token.clear()
             get_token()
     else:
         print("没有 token，获取token")
