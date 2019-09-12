@@ -8,7 +8,7 @@
 
 代码和结构非常简陋   
 发消息call 偏移是 0x316463   
-需要在微信目录下新建两个txt文件，write.txt编码ASNI read.txt编码UTF-8
+需要在微信目录下新建两个txt文件，write.txt编码ASNI read.txt编码UTF-8   
 流程图   
 ![image](https://github.com/holdyeah/wechat-pc-hook-python/blob/master/images/%E8%AF%B4%E6%98%8E.png)   
 注入工具   
