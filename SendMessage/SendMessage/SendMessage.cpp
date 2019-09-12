@@ -4,6 +4,9 @@
 #include "stdafx.h"
 #include <Windows.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <atlconv.h>
+#include<string.h>
 #include "resource.h"
 #define HOOK_LEN 5
 HANDLE hWHND = 0;
@@ -82,13 +85,16 @@ VOID printLog(DWORD msgAdd)
 	TCHAR buff[0x8000] = { 0 };
 	GetDlgItemText(hDlg, MESSAGE_LOG, buff, sizeof(buff));
 	if (*(LPVOID *)wxid2Add <= 0x0) {
-		swprintf_s(buff, L"%s wxid:%s 消息内容:%s\r\n", buff, *((LPVOID *)wxidAdd), *((LPVOID *)messageAdd));
+		swprintf_s(buff, L"%s wxid:%s 消息内容:%s \r \n", buff, *((LPVOID *)wxidAdd), *((LPVOID *)messageAdd));
 		//swprintf_s(buff, L"ESI=%p wxid=%p wxid2=%p wxid2=%p\r\n", msgAdd, msgAdd - 0x1A0, *((LPVOID *)wxidAdd));
 	}
 	else {
-		swprintf_s(buff, L"%s 群ID:%s 发送者ID:%s 消息内容:%s\r\n", buff, *((LPVOID *)wxidAdd), *((LPVOID *)wxid2Add), *((LPVOID *)messageAdd));
+		swprintf_s(buff, L"%s 群ID:%s 发送者ID:%s 消息内容:%s \r \n", buff, *((LPVOID *)wxidAdd), *((LPVOID *)wxid2Add), *((LPVOID *)messageAdd));
 	}
-
+	FILE *fpRead = fopen(("read.txt"), ("a,ccs=UTF-8"));
+	fwrite(buff, sizeof(TCHAR), wcslen(buff), fpRead);
+	//fprintf(fpRead, "%s\n", buff);
+	fclose(fpRead);
 	SetDlgItemText(hDlg, MESSAGE_LOG, buff);
 }
 
