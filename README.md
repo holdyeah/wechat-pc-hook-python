@@ -8,6 +8,9 @@
 
 代码和结构非常简陋   
 发消息call 偏移是 0x316463   
+
+流程图   
+![image](https://github.com/holdyeah/wechat-pc-hook-python/blob/master/images/%E8%AF%B4%E6%98%8E.png)   
 注入工具   
 ![image](https://github.com/holdyeah/wechat-pc-hook-python/blob/master/images/TeachDemos.png)   
 内容显示   
