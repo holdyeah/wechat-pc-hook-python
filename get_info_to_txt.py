@@ -16,8 +16,8 @@ headers = {
     'X-Requested-With': 'XMLHttpRequest',
 }
 data_search= {
-    "account":"ds00502",
-    "password":"E10ADC3949BA59ABBE56E057F20F883E"
+    "account":"ds*****",
+    "password":"*******"
 }
 
 con_url='http://pgc.cloud.nbtv.cn/interfaces/ContentSearch.do'
@@ -123,12 +123,12 @@ def decide_infos(infos_response):
 
 def write_txt():
     print("判断txt写入")
-    txt_open = open('C:/Program Files (x86)/Tencent/WeChat/1.txt','r')
+    txt_open = open('C:/Program Files (x86)/Tencent/WeChat/write.txt','r')
     txt = txt_open.read()
     txt_open.close()
     if(txt == ''):
         print("ok了写入")
-        data = open('C:/Program Files (x86)/Tencent/WeChat/1.txt','w+')
+        data = open('C:/Program Files (x86)/Tencent/WeChat/write.txt','w+')
         txt_data1 = read_data_infos_title[0]
         #判断有没有视频
         txt_data2 = ""
