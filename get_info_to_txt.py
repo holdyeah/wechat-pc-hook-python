@@ -3,7 +3,7 @@
 python -m pip install --upgrade pip
 pip install apscheduler
 """
-import time,os,json,requests,queue
+import time,os,json,requests,queue,random
 from apscheduler.schedulers.background import BackgroundScheduler
 
 
@@ -15,10 +15,13 @@ headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36',
     'X-Requested-With': 'XMLHttpRequest',
 }
-data_search= {
-    "account":"ds*****",
-    "password":"*******"
-}
+data_search= [
+    {"account":"ds1*****","password":"*******"},
+    {"account":"ds2*****","password":"*******"},
+    {"account":"ds3*****","password":"*******"},
+    {"account":"ds4*****","password":"*******"},
+    {"account":"ds5*****","password":"*******"},
+]
 
 con_url='http://pgc.cloud.nbtv.cn/interfaces/ContentSearch.do'
 con_headers = {
@@ -46,7 +49,7 @@ read_data_infos_time =[]
 
 def get_token():
     print("获取 token")
-    response=session.post(url,headers=headers,data=json.dumps(data_search))
+    response=session.post(url,headers=headers,data=json.dumps(data_search[random.randint(0,len(data_search))]))
     string_token.append(response.json()['token'])
 
 def get_infos():
