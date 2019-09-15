@@ -7,11 +7,11 @@ import time,os,json,requests,queue,random
 from apscheduler.schedulers.background import BackgroundScheduler
 
 
-url = 'http://pgc.cloud.nbtv.cn/interfaces/login.do'
+url = 'http://******/interfaces/login.do'
 headers = {
     'Accept': 'application/json, text/javascript, */*; q=0.01',
     'Content-Type': 'application/json; charset=UTF-8',
-    'Referer': 'http://pgc.cloud.nbtv.cn/tl/login.html',
+    'Referer': 'http://******/tl/login.html',
     'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36',
     'X-Requested-With': 'XMLHttpRequest',
 }
@@ -23,11 +23,11 @@ data_search= [
     {"account":"ds5*****","password":"*******"},
 ]
 
-con_url='http://pgc.cloud.nbtv.cn/interfaces/ContentSearch.do'
+con_url='http://******/interfaces/ContentSearch.do'
 con_headers = {
     'Accept': '*/*',
     'Content-Type': 'application/json;charset=UTF-8',
-    'Referer': 'http://pgc.cloud.nbtv.cn/tl/static/contentManage/allContent.html',
+    'Referer': 'http://******/tl/static/contentManage/allContent.html',
     'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36',
     'X-Requested-With': 'XMLHttpRequest',
 }
