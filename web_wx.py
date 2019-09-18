@@ -5,17 +5,30 @@ python -m pip install --upgrade pip
 pip install apscheduler
 
 """
-import os,time
+import os,time,shutil
 #导入apscheduler线程模块
 from apscheduler.schedulers.background import BackgroundScheduler
+
+
+#写入到web爆料中
+
+
 """
 从read.txt中获取到实时数据信息
 判断是否是自己需要的内容
 是自己需要的内容就一条一条的写入到web爆料中去
 """
-def tick_go_read_to_webBaoLiao():
-    print('tick_go_read_to_webBaoLiao!')
+def copy_wx_file_to_cpyefilename(wx_filename,copy_filename):
+    newstime = time.strftime('%Y-%m-%d',time.localtime())
+    shutil.copy(wx_filename,copy_filename+newstime+'.txt')
 
+def tick_go_read_to_webBaoLiao():
+    print('获取read.txt中相关信息写入到web爆料!')
+    #微信read.txt目录
+    wx_filename = 'C:\\Program Files (x86)\\Tencent\\WeChat\\read.txt'
+    #复制read.txt到cpoy_filename路径
+    copy_filename = 'C:\\Users\\wx\\Desktop\\wx\\raw_data\\'
+    copy_wx_file_to_cpyefilename(wx_filename,copy_filename)
 
 """
 实时读取webxx地区信息
@@ -23,7 +36,7 @@ def tick_go_read_to_webBaoLiao():
 有新就一条一条的发送到微信和写入到web爆料中
 """
 def tick_go_webDiQu_to_wx_and_webBaoLiao():
-    print('tick_go_webDiQu_to_wx_and_webBaoLiao!')
+    print('获取web地区新条目发送到微信和写入到web爆料!')
 
 #运行
 if __name__ == '__main__':
