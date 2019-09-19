@@ -5,7 +5,7 @@
 微信的版本：2.6.8.56   
 开发环境：VS2017 使用C++的桌面开发   
 大神的https://github.com/hedada-hc/pc_wechat_hook   
-说明：TeachDemos.exe和微信exe需要以管理员运行，在微信目录下新建两个txt文件，write.txt编码ASNI read.txt编码UTF-8。不然程序无法读取写入到txt中去   
+说明：TeachDemos.exe和微信exe需要以管理员运行，在微信目录下新建两个txt文件，write.txt编码UTF-8 read.txt编码UTF-8。不然程序无法读取写入到txt中去   
 
 代码和结构非常简陋   
 2.6.8.56版本发消息call偏移是0x316463    
