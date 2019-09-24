@@ -20,7 +20,7 @@ queue = queue.Queue()
 
 #检查web是否正常
 def check_network():
-    res_network = session.get("https://*******.cn/login?service=http%3A%2F%2F*******%2Flogin%2Fmain%2F",verify=False)
+    res_network = session.get("https://cas.*****.cn/login?service=http%3A%2F%2Fweb.*****.cn%2Flogin%2Fmain%2F",verify=False)
     return res_network.status_code
 
 #web爆料
@@ -33,7 +33,7 @@ def open_chrme_webBaoLiao(username,userpass,column,info_lists):
         login_lt=''
         login_strTemp=''
         login_e1s2=''
-        respon_get = session.get("https://*******.cn/login?service=http%3A%2F%2F*******%2Flogin%2Fmain%2F",verify=False)
+        respon_get = session.get("https://cas.*****.cn/login?service=http%3A%2F%2Fweb.*****.cn%2Flogin%2Fmain%2F",verify=False)
         cookies = requests.utils.dict_from_cookiejar(respon_get.cookies)
         login_cookies = login_cookies+'JSESSIONID='+cookies['JSESSIONID']
         login_html=BeautifulSoup(respon_get.text,'lxml')
@@ -54,9 +54,9 @@ def open_chrme_webBaoLiao(username,userpass,column,info_lists):
             'Connection': 'keep-alive',
             'Content-Type': 'application/x-www-form-urlencoded',
             'Cookie': login_cookies,
-            'Host': 'cas.*******.cn',
-            'Origin': 'https://cas.*******..cn',
-            'Referer': 'https://cas.*******.cn/login?service=http%3A%2F%2Fweb..*******..cn%2Flogin%2Fmain%2F',
+            'Host': 'cas.*****.cn',
+            'Origin': 'https://cas.*****.cn',
+            'Referer': 'https://cas.*****.cn/login?service=http%3A%2F%2Fweb.*****.cn%2Flogin%2Fmain%2F',
             'Sec-Fetch-Mode': 'navigate',
             'Sec-Fetch-Site': 'same-origin',
             'Sec-Fetch-User': '?1',
@@ -64,7 +64,7 @@ def open_chrme_webBaoLiao(username,userpass,column,info_lists):
             'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36',
         }
         login_data='username='+username+'&strTemp='+login_strTemp+'&password='+userpass+'&lt='+login_lt+'&execution='+login_e1s2+'&_eventId=submit&submit=%E7%AB%8B%E5%8D%B3%E7%99%BB%E5%BD%95'
-        login_url = 'https://cas.*******.cn/login?service=http%3A%2F%2Fweb.*******.%2Flogin%2Fmain%2F'
+        login_url = 'https://cas.*****.cn/login?service=http%3A%2F%2Fweb.*****.cn%2Flogin%2Fmain%2F'
         login_response=session.post(login_url,headers=login_headers,data=login_data,verify=False)
         print(login_response.status_code)
         if login_response.status_code != 200:
@@ -74,19 +74,19 @@ def open_chrme_webBaoLiao(username,userpass,column,info_lists):
         elif login_response.status_code == 200:
             print("登录成功")
             time.sleep(2)
-            url_ecc='http://ecc.*******.cn:19207/portal/Login/loginCas;jsessionid='+session.cookies['JSESSIONID']+'?key=menu_bl'
+            url_ecc='http://ecc.*****.cn:19207/portal/Login/loginCas;jsessionid='+session.cookies['JSESSIONID']+'?key=menu_bl'
             ecc_get = session.get(url_ecc,verify=False)
             ecc_token ='siteCode=S1; token='+ecc_get.url[69:]
             ecc_headers ={
                 'Accept':'application/json, text/plain, */*',
                 'Accept-Encoding': 'gzip, deflate',
                 'Accept-Language': 'zh-CN,zh;q=0.9',
-                'Host': 'ecc.*******.cn:19207',
+                'Host': 'ecc.*****.cn:19207',
                 'Connection': 'keep-alive',
-                'Origin': 'http://ecc.*******.cn:19207',
+                'Origin': 'http://ecc.*****.cn:19207',
                 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36',
                 'Content-Type': 'application/json;charset=UTF-8',
-                'Referer': 'http://ecc.*******.cn:19207/tpp/',
+                'Referer': 'http://ecc.*****.cn:19207/tpp/',
                 "Referrer Policy":"no-referrer-when-downgrade",
                 'Cookie': ecc_token,
             }
@@ -108,30 +108,45 @@ def open_chrme_webBaoLiao(username,userpass,column,info_lists):
                 content = (info_str[fu_content+3:])
                 columnCode = ""
                 columnname = ""
-                if column == ".*******.":
-                    columnCode = ".*******."
-                    columnname = ".*******."
-                elif column == ".*******.":
-                    columnCode = ".*******."
-                    columnname = ".*******."
-                elif column == ".*******.":
-                    columnCode = ".*******."
-                    columnname = ".*******."
-                elif column == ".*******.":
-                    columnCode = ".*******."
-                    columnname = ".*******."
+                if column == ".*****.":
+                    columnCode = ".*****."
+                    columnname = ".*****."
+                elif column == ".*****.":
+                    columnCode = ".*****."
+                    columnname = ".*****."
+                elif column == ".*****.":
+                    columnCode = ".*****."
+                    columnname = ".*****."
+                elif column == ".*****.":
+                    columnCode = ".*****."
+                    columnname = ".*****."
                 else:
-                    columnCode = ".*******."
-                    columnname = ".*******."
+                    columnCode = ".*****."
+                    columnname = ".*****."
                 description = content
                 title = title_info
-                createUserName = ".*******."
-                siteName  = ".*******."
+                createUserName = ".*****."
+                siteName  = ".*****."
                 data_ecc ='''{\"strategy\":{\"send\":true,\"task\":false},\"columnCode\":\"'''+columnCode+'''\",\"description\":\"<p>'''+description+'''</p>\",\"source\":\"4\",\"category\":\"1\",\"title\":\"'''+title+'''\",\"phone\":\"test\",\"clueCreateTime\":null,\"columnname\":\"'''+columnname +'''\",\"createUserCode\":\"6E76\",\"createUserName\":\"'''+createUserName+'''\",\"siteCode\":\"S1\",\"siteName\":\"'''+ siteName +'''\"}'''
                 print(data_ecc)
-                url_ecc_post='http://ecc.*******.cn:19207/tpp/rest/content/clue/add'
+                url_ecc_post='http://ecc.*****.cn:19207/tpp/rest/content/clue/add'
                 response_ecc=session.post(url_ecc_post,data=data_ecc.encode('utf-8'),headers=ecc_headers,verify=False)
-                print(response_ecc.json())
+                #print(response_ecc.json())
+                uuid = response_ecc.json()['data'][0]['uuid']
+                uuid_url = 'http://ecc.*****.cn:19207/tpp/rest/content/clue/updateStatus?uuid='+uuid
+                headers_uuid ={
+                    'Accept':'application/json, text/plain, */*',
+                    'Accept-Encoding': 'gzip, deflate',
+                    'Accept-Language': 'zh-CN,zh;q=0.9',
+                    'Host': 'ecc.*****.cn:19207',
+                    'Connection': 'keep-alive',
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36',
+                    'Content-Type': 'application/json;charset=UTF-8',
+                    'Referer': 'http://ecc.*****.cn:19207/tpp/',
+                    'Cookie': ecc_token,
+                }
+                response_uuid=session.get(uuid_url,headers=headers_uuid,verify=False)
+                print(response_uuid.json())
                 
             print("hook")
             break
@@ -227,14 +242,14 @@ def format_into_a_dictionary_one(into):
 #根据标题返回不同账号
 def user(suobe_title):
     txt_title = suobe_title
-    if txt_title.find(".*******.") != -1:
-        return '.*******.','.*******.','.*******.'
-    elif txt_title.find(".*******.") != -1:
-        return '.*******.','.*******.','.*******.'
-    elif txt_title.find(".*******.") != -1:
-        return '.*******.','.*******.','.*******.'
+    if txt_title.find(".*****.") != -1:
+        return '.*****.','.*****.','.*****.'
+    elif txt_title.find(".*****.") != -1:
+        return '.*****.','.*****.','.*****.'
+    elif txt_title.find(".*****.") != -1:
+        return '.*****.','.*****.','.*****.'
     else:
-        return '.*******.','.*******.','.*******.'
+        return '.*****.','.*****.','.*****.'
 
 #复制文本到命名为2000-01-01.txt格式 copy_filename路径下
 def copy_wx_file_to_cpyefilename(wx_filename,copy_filename):
@@ -303,35 +318,35 @@ read_data_Webinfos_time =[]
 string_token = []
 string_ID = []
 #获取登录token地址
-url = 'http://pgc.*******.cn/interfaces/login.do'
+url = 'http://pgc.*****.cn/interfaces/login.do'
 #登录的头文件
 headers = {
     'Accept': 'application/json, text/javascript, */*; q=0.01',
     'Content-Type': 'application/json; charset=UTF-8',
-    'Referer': 'http://pgc.*******.cn/tl/login.html',
+    'Referer': 'http://pgc.*****.cn/tl/login.html',
     'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36',
     'X-Requested-With': 'XMLHttpRequest',
 }
 #登录账号密码
 data_search= [
-    {'account':'.*******.','password':'.*******.'},
-    {'account':'.*******.','password':'.*******.'},
-    {'account':'.*******.','password':'.*******.'},
-    {'account':'.*******.','password':'.*******.'},
-    {'account':'.*******.','password':'.*******.'},
-    {'account':'.*******.','password':'.*******.'},
-    {'account':'.*******.','password':'.*******.'},
-    {'account':'.*******.','password':'.*******.'},
-    {'account':'.*******.','password':'.*******.'},
-    {'account':'.*******.','password':'.*******.'},
+    {'account':'.*****.','password':'.*****.'},
+    {'account':'.*****.','password':'.*****.'},
+    {'account':'.*****.','password':'.*****.'},
+    {'account':'.*****.','password':'.*****.'},
+    {'account':'.*****.','password':'.*****.'},
+    {'account':'.*****.','password':'.*****.'},
+    {'account':'.*****.','password':'.*****.'},
+    {'account':'.*****.','password':'.*****.'},
+    {'account':'.*****.','password':'.*****.'},
+    {'account':'.*****.','password':'.*****.'},
 ]
 #获取内容地址
-con_url='http://pgc.*******.cn/interfaces/ContentSearch.do'
+con_url='http://pgc.*****.cn/interfaces/ContentSearch.do'
 #获取内容的头
 con_headers = {
     'Accept': '*/*',
     'Content-Type': 'application/json;charset=UTF-8',
-    'Referer': 'http://pgc.*******.cn/tl/static/contentManage/allContent.html',
+    'Referer': 'http://pgc..*****.cn/tl/static/contentManage/allContent.html',
     'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36',
     'X-Requested-With': 'XMLHttpRequest',
 }
@@ -346,7 +361,7 @@ def open_chrme_webBaoLiao_toDaiQu(username,userpass):
         login_lt=''
         login_strTemp=''
         login_e1s2=''
-        respon_get = session.get("https://cas.*******.cn/login?service=http%3A%2F%2F.*******.cn%2Flogin%2Fmain%2F",verify=False)
+        respon_get = session.get("https://cas.*****.cn/login?service=http%3A%2F%2Fweb.*****.cn%2Flogin%2Fmain%2F",verify=False)
         cookies = requests.utils.dict_from_cookiejar(respon_get.cookies)
         login_cookies = login_cookies+'JSESSIONID='+cookies['JSESSIONID']
         login_html=BeautifulSoup(respon_get.text,'lxml')
@@ -367,9 +382,9 @@ def open_chrme_webBaoLiao_toDaiQu(username,userpass):
             'Connection': 'keep-alive',
             'Content-Type': 'application/x-www-form-urlencoded',
             'Cookie': login_cookies,
-            'Host': 'cas..*******.cn',
-            'Origin': 'https://cas.*******.cn',
-            'Referer': 'https://cas.*******.cn/login?service=http%3A%2F%2F.*******.cn%2Flogin%2Fmain%2F',
+            'Host': 'cas.*****.cn',
+            'Origin': 'https://cas.*****.cn',
+            'Referer': 'https://cas.*****.cn/login?service=http%3A%2F%2Fweb.*****.cn%2Flogin%2Fmain%2F',
             'Sec-Fetch-Mode': 'navigate',
             'Sec-Fetch-Site': 'same-origin',
             'Sec-Fetch-User': '?1',
@@ -377,7 +392,7 @@ def open_chrme_webBaoLiao_toDaiQu(username,userpass):
             'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36',
         }
         login_data='username='+username+'&strTemp='+login_strTemp+'&password='+userpass+'&lt='+login_lt+'&execution='+login_e1s2+'&_eventId=submit&submit=%E7%AB%8B%E5%8D%B3%E7%99%BB%E5%BD%95'
-        login_url = 'https://cas.*******.cn/login?service=http%3A%2F%2F.*******.cn%2Flogin%2Fmain%2F'
+        login_url = 'https://cas.*****.cn/login?service=http%3A%2F%2Fweb.*****.cn%2Flogin%2Fmain%2F'
         login_response=session.post(login_url,headers=login_headers,data=login_data,verify=False)
         print(login_response.status_code)
         if login_response.status_code != 200:
@@ -387,33 +402,46 @@ def open_chrme_webBaoLiao_toDaiQu(username,userpass):
         elif login_response.status_code == 200:
             print("登录成功")
             time.sleep(2)
-            url_ecc='http://ecc.*******.cn:19207/portal/Login/loginCas;jsessionid='+session.cookies['JSESSIONID']+'?key=menu_bl'
+            url_ecc='http://ecc.*****.cn:19207/portal/Login/loginCas;jsessionid='+session.cookies['JSESSIONID']+'?key=menu_bl'
             ecc_get = session.get(url_ecc,verify=False)
             ecc_token ='siteCode=S1; token='+ecc_get.url[69:]
             ecc_headers ={
                 'Accept':'application/json, text/plain, */*',
                 'Accept-Encoding': 'gzip, deflate',
                 'Accept-Language': 'zh-CN,zh;q=0.9',
-                'Host': 'ecc.*******.cn:19207',
+                'Host': 'ecc.*****.cn:19207',
                 'Connection': 'keep-alive',
-                'Origin': 'http://ecc.*******.cn:19207',
+                'Origin': 'http://ecc.*****.cn:19207',
                 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36',
                 'Content-Type': 'application/json;charset=UTF-8',
-                'Referer': 'http://ecc.*******.cn:19207/tpp/',
+                'Referer': 'http://ecc.*****.cn:19207/tpp/',
                 "Referrer Policy":"no-referrer-when-downgrade",
                 'Cookie': ecc_token,
             }
-            columnCode = ".*******."
-            columnname = ".*******."
+            columnCode = ".*****."
+            columnname = ".*****."
             description = read_data_Webinfos_title[0]
             title = read_data_Webinfos_title[0]
-            createUserName = ".*******."
-            siteName  = ".*******."
+            createUserName = ".*****."
+            siteName  = ".*****."
             data_ecc ='''{\"strategy\":{\"send\":true,\"task\":false},\"columnCode\":\"'''+columnCode+'''\",\"description\":\"<p>'''+description+'''</p>\",\"source\":\"4\",\"category\":\"1\",\"title\":\"'''+title+'''\",\"phone\":\"test\",\"clueCreateTime\":null,\"columnname\":\"'''+columnname +'''\",\"createUserCode\":\"6E76\",\"createUserName\":\"'''+createUserName+'''\",\"siteCode\":\"S1\",\"siteName\":\"'''+ siteName +'''\"}'''
-            print(data_ecc)
-            url_ecc_post='http://ecc.cloud.nbtv.cn:19207/tpp/rest/content/clue/add'
+            url_ecc_post='http://ecc.*****.cn:19207/tpp/rest/content/clue/add'
             response_ecc=session.post(url_ecc_post,data=data_ecc.encode('utf-8'),headers=ecc_headers,verify=False)
-            print(response_ecc.json())
+            uuid = response_ecc.json()['data'][0]['uuid']
+            uuid_url = 'http://ecc.*****.cn:19207/tpp/rest/content/clue/updateStatus?uuid='+uuid
+            headers_uuid ={
+                'Accept':'application/json, text/plain, */*',
+                'Accept-Encoding': 'gzip, deflate',
+                'Accept-Language': 'zh-CN,zh;q=0.9',
+                'Host': 'ecc.*****.cn:19207',
+                'Connection': 'keep-alive',
+                'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36',
+                'Content-Type': 'application/json;charset=UTF-8',
+                'Referer': 'http://ecc.*****.cn:19207/tpp/',
+                'Cookie': ecc_token,
+            }
+            response_uuid=session.get(uuid_url,headers=headers_uuid,verify=False)
+            print(response_uuid.json())
             print("hook")
             break
 
@@ -538,8 +566,8 @@ def write_txt():
 
 #内容写入到web爆料中
 def read_suobe_BaoLiao():
-    name = '.*******.'
-    password = '.*******.'
+    name = '.*****.'
+    password = '.*****.'
     time.sleep(2)
     while True:
         driver_status_code = check_network()
