@@ -280,4 +280,5 @@ def to_webBaoLiao():
                 shuju_data.jizhe.pop(0)
                 shuju_data.diqu.pop(0)
                 shuju_data.neirou.pop(0)
+            break
                 
