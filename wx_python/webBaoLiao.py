@@ -13,7 +13,7 @@ def screening_txtData(filename):
     txtbuffer=TXTtemp.read()
     strlist1=txtbuffer.replace("\n"," ")
     findword =u"(#.*?&)"
-    findanti =r"(?<=@小蜗牛)\d*"
+    findanti =r"(?<=@小蜗牛 )\d+"
     pattern_word = re.compile(findword)
     pattern_anti = re.compile(findanti)
     results_word = pattern_word.findall(strlist1)
@@ -142,7 +142,7 @@ def format_into_a_dictionary_one(into):
 
 #检查web是否正常
 def check_network():
-    res_network = shuju_data.session.get("https://cas********",verify=False)
+    res_network = shuju_data.session.get("https://cas.******.cn/login?service=http%3A%2F%2Fweb.******.cn%2Flogin%2Fmain%2F",verify=False)
     return res_network.status_code
 
 #检查网络，正常就把内容写入到web爆料中
@@ -151,15 +151,14 @@ def read_suobe():
     while True:
         driver_status_code = check_network()
         if driver_status_code != 200:
-            print("网络错误")
+            print("web网络错误")
             time.sleep(150)
             continue
         elif driver_status_code == 200:
-            print("网络正常")
+            print("web网络正常")
             to_webBaoLiao()
-            print("=======")
             break
-    print("关闭")
+    print("关闭web")
 
 #biaoti,lanmu,neirou,jizhe,diqu,shoujihao
 def to_webBaoLiao():
@@ -172,7 +171,7 @@ def to_webBaoLiao():
         login_lt=''
         login_strTemp=''
         login_e1s2=''
-        respon_get = session.get("https://cas********",verify=False)
+        respon_get = session.get("https://cas.******.cn/login?service=http%3A%2F%2Fweb.******.cn%2Flogin%2Fmain%2F",verify=False)
         cookies = requests.utils.dict_from_cookiejar(respon_get.cookies)
         login_cookies = login_cookies+'JSESSIONID='+cookies['JSESSIONID']
         login_html=BeautifulSoup(respon_get.text,'lxml')
@@ -193,9 +192,9 @@ def to_webBaoLiao():
             'Connection': 'keep-alive',
             'Content-Type': 'application/x-www-form-urlencoded',
             'Cookie': login_cookies,
-            'Host': 'cas.*****.cn',
-            'Origin': 'https://cas.*****.cn',
-            'Referer': 'https://cas.*****',
+            'Host': 'cas.******.cn',
+            'Origin': 'https://cas.******.cn',
+            'Referer': 'https://cas.******.cn/login?service=http%3A%2F%2Fweb.******.cn%2Flogin%2Fmain%2F',
             'Sec-Fetch-Mode': 'navigate',
             'Sec-Fetch-Site': 'same-origin',
             'Sec-Fetch-User': '?1',
@@ -203,9 +202,9 @@ def to_webBaoLiao():
             'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36',
         }
         login_data='username='+shuju_data.webbiaoli_name+'&strTemp='+login_strTemp+'&password='+shuju_data.webbiaoli_password+'&lt='+login_lt+'&execution='+login_e1s2+'&_eventId=submit&submit=%E7%AB%8B%E5%8D%B3%E7%99%BB%E5%BD%95'
-        login_url = 'https://cas.*****.cn'
+        login_url = 'https://cas.******.cn/login?service=http%3A%2F%2Fweb.******.cn%2Flogin%2Fmain%2F'
         login_response=session.post(login_url,headers=login_headers,data=login_data,verify=False)
-        print(login_response.status_code)
+        #print(login_response.status_code)
         if login_response.status_code != 200:
             print("登录失败")
             time.sleep(10)
@@ -213,67 +212,67 @@ def to_webBaoLiao():
         elif login_response.status_code == 200:
             print("登录成功")
             time.sleep(2)
-            url_ecc='http://ecc.*****.cnloginCas;jsessionid='+session.cookies['JSESSIONID']+'?key=menu_bl'
+            url_ecc='http://ecc.******.cn:19207/portal/Login/loginCas;jsessionid='+session.cookies['JSESSIONID']+'?key=menu_bl'
             ecc_get = session.get(url_ecc,verify=False)
             ecc_token ='siteCode=S1; token='+ecc_get.url[69:]
             ecc_headers ={
                 'Accept':'application/json, text/plain, */*',
                 'Accept-Encoding': 'gzip, deflate',
                 'Accept-Language': 'zh-CN,zh;q=0.9',
-                'Host': 'cas.*****.cn',
+                'Host': 'ecc.******.cn:19207',
                 'Connection': 'keep-alive',
-                'Origin': 'http://cas.*****.cn',
+                'Origin': 'http://ecc.******.cn:19207',
                 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36',
                 'Content-Type': 'application/json;charset=UTF-8',
-                'Referer': 'http://cas.*****.cntpp/',
+                'Referer': 'http://ecc.******.cn:19207/tpp/',
                 "Referrer Policy":"no-referrer-when-downgrade",
                 'Cookie': ecc_token,
             }
-            print(len(shuju_data.biaoti))
+            #print(len(shuju_data.biaoti))
             info_size_up_number = len(shuju_data.biaoti)
             for index in range(info_size_up_number):
-                print(index)
+                print("写入第"+str(index)+"条")
                 columnCode = ""
                 columnname = ""
-                if shuju_data.lanmu[0] == "cas.*****.cn":
-                    columnCode = "cas.*****.cn"
-                    columnname = "cas.*****.cn"
-                elif shuju_data.lanmu[0] == "cas.*****.cn":
-                    columnCode = "cas.*****.cn"
-                    columnname = "cas.*****.cn"
-                elif shuju_data.lanmu[0] == "cas.*****.cn":
-                    columnCode = "cas.*****.cn"
-                    columnname = "cas.*****.cn"
-                elif shuju_data.lanmu[0] == "cas.*****.cn":
-                    columnCode = "cas.*****.cn"
-                    columnname = "cas.*****.cn"
+                if shuju_data.lanmu[0] == "******":
+                    columnCode = "******"
+                    columnname = "******"
+                elif shuju_data.lanmu[0] == "******":
+                    columnCode = "******"
+                    columnname = "******"
+                elif shuju_data.lanmu[0] == "******":
+                    columnCode = "******"
+                    columnname = "******"
+                elif shuju_data.lanmu[0] == "******":
+                    columnCode = "******"
+                    columnname = "******"
                 else:
-                    columnCode = "cas.*****.cn"
-                    columnname = "cas.*****.cn"
+                    columnCode = "******"
+                    columnname = "******"
                 description = shuju_data.neirou[0]
                 title = shuju_data.biaoti[0]
-                createUserName = "cas.*****.cn"
-                siteName  = "cas.*****.cn"
+                createUserName = "******"
+                siteName  = "******"
                 data_ecc ='''{\"strategy\":{\"send\":true,\"task\":false},\"columnCode\":\"'''+columnCode+'''\",\"description\":\"<p>'''+description+'''</p>\",\"source\":\"4\",\"category\":\"1\",\"title\":\"'''+title+'''\",\"phone\":\"test\",\"clueCreateTime\":null,\"columnname\":\"'''+columnname +'''\",\"createUserCode\":\"6E76\",\"createUserName\":\"'''+createUserName+'''\",\"siteCode\":\"S1\",\"siteName\":\"'''+ siteName +'''\"}'''
                 #print(data_ecc)
-                url_ecc_post='http://cas.*****.cn/tpp/rest/content/clue/add'
+                url_ecc_post='http://ecc.******.cn:19207/tpp/rest/content/clue/add'
                 response_ecc=session.post(url_ecc_post,data=data_ecc.encode('utf-8'),headers=ecc_headers,verify=False)
                 #print(response_ecc.json())
                 uuid = response_ecc.json()['data'][0]['uuid']
-                uuid_url = 'http://cas.*****.cn/tpp/rest/content/clue/updateStatus?uuid='+uuid
+                uuid_url = 'http://ecc.******.cn:19207/tpp/rest/content/clue/updateStatus?uuid='+uuid
                 headers_uuid ={
                     'Accept':'application/json, text/plain, */*',
                     'Accept-Encoding': 'gzip, deflate',
                     'Accept-Language': 'zh-CN,zh;q=0.9',
-                    'Host': 'cas.*****.cn',
+                    'Host': 'ecc.******.cn:19207',
                     'Connection': 'keep-alive',
                     'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.132 Safari/537.36',
                     'Content-Type': 'application/json;charset=UTF-8',
-                    'Referer': 'http://cas.*****.cn/tpp/',
+                    'Referer': 'http://ecc.******.cn:19207/tpp/',
                     'Cookie': ecc_token,
                 }
-                response_uuid=session.get(uuid_url,headers=headers_uuid,verify=False)
-                print(response_uuid.json())
+                session.get(uuid_url,headers=headers_uuid,verify=False)
+                #print(response_uuid.json())
                 #删除列表第一个
                 shuju_data.biaoti.pop(0)
                 shuju_data.lanmu.pop(0)
@@ -281,4 +280,3 @@ def to_webBaoLiao():
                 shuju_data.diqu.pop(0)
                 shuju_data.neirou.pop(0)
             break
-                
