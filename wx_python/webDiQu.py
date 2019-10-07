@@ -155,11 +155,12 @@ def decide_infos(infos_response):
                     shuju_data.txt_area.append(info_area[txt_index])
                     shuju_data.txt_time.append(info_time[txt_index])
                     #添加数据到爆料列表中去
-                    shuju_data.biaoti.append(info_title[txt_index])
-                    shuju_data.lanmu.append('0')
-                    shuju_data.jizhe.append('0')
-                    shuju_data.diqu.append(info_area[txt_index])
-                    shuju_data.neirou.append(info_title[txt_index])
+                    if info_video[txt_index] != '0':
+                        shuju_data.biaoti.append(info_title[txt_index])
+                        shuju_data.lanmu.append('0')
+                        shuju_data.jizhe.append('0')
+                        shuju_data.diqu.append(info_area[txt_index])
+                        shuju_data.neirou.append(info_title[txt_index])
                 #新列表中的后面跟旧的列表一致的ATTACHMENTTYPE有没有变化
                 for old_index in range(len(info_id) - data_index):
                     if info_video[data_index + old_index] != shuju_data.tonglian_infos_video[old_index]:
