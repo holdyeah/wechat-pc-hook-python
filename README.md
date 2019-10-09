@@ -11,7 +11,7 @@ hookpc微信客户端的发消息和收信息,运用python自动化收发消息
 # 结构说明
 
 流程图   
-![image](https://github.com/holdyeah/wechat-pc-hook-python/blob/master/images/%E8%AF%B4%E6%98%8E.png)   
+ 
 注入工具   
 ![image](https://github.com/holdyeah/wechat-pc-hook-python/blob/master/images/TeachDemos.png)   
 内容显示   
