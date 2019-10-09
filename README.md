@@ -1,19 +1,15 @@
-# wechat-pc-hook-python
+# pc微信hook python注入器
 
-打算把微信电脑端的发消息的hook加上python自动化   
-基本功能：根据python来源获取到特定数据，转发到某个微信id   
-微信的版本：2.6.8.56   
-开发环境：VS2017 使用C++的桌面开发   
-如何运行：在TeachDemos\Debug\下找到TeachDemos.exe以管理员运行,TeachDemos.exe(默认微信路径是)会加载同目录下的SendMessage.dll到微信中去   
-或者修改python_hook.py内的dll_path路径运行python_hook.py 可以注入dll到微信中去
-大神的https://github.com/hedada-hc/pc_wechat_hook   
+hookpc微信客户端的发消息和收信息,运用python自动化收发消息   
+基本功能：通过python注入dll到微信中，python筛选数据，转发到某个微信用户或群id,保存聊天记录到read.txt   
+微信的版本：2.6.8.56(2.6.8.56版本发消息call偏移是0x316463)   
+开发环境：VS2017使用C++的桌面开发,python3.7.3 32位(备注：64位python可能无法注入dll到微信)   
+如何运行：在TeachDemos\Debug\下找到TeachDemos.exe以管理员运行,TeachDemos.exe(默认微信路径是)会加载同目录下的SendMessage.dll到微信中去    
+或者修改python_hook.py(python注入器)内的dll_path路径运行python_hook.py 可以注入dll到微信中去    
+大神的https://github.com/hedada-hc/pc_wechat_hook    
+说明：TeachDemos.exe和微信exe需要以管理员运行，在微信目录下新建两个txt文件，write.txt编码UTF-8 read.txt编码UTF-8。不然程序无法读取写入到txt中去(wx_python文件夹不用管，这个是我自己的获取的特定web,收发信息的python)    
+# 结构说明
 
-说明：TeachDemos.exe和微信exe需要以管理员运行，在微信目录下新建两个txt文件，write.txt编码UTF-8 read.txt编码UTF-8。不然程序无法读取写入到txt中去   
-
-代码和结构非常简陋   
-2.6.8.56版本发消息call偏移是0x316463    
-
-web_wx.py不用下载，这个是我自己的获取的特定web,收发信息的python   
 流程图   
 ![image](https://github.com/holdyeah/wechat-pc-hook-python/blob/master/images/%E8%AF%B4%E6%98%8E.png)   
 注入工具   
