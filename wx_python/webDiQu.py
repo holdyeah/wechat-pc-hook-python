@@ -83,7 +83,7 @@ def get_infos():
         "newsType":0,
         "initiator":"0",
         "departmentId":"0",
-        "pageSize":5,
+        "pageSize":15,
         "pageNo":1,
         "type":5,
         "token": shuju_data.string_token[0],
@@ -151,13 +151,13 @@ def decide_infos(infos_response):
             if(data_index != 0):
                 #print("写入到txt web列表")
                 for txt_index in range(data_index):
-                    shuju_data.txt_id.append(info_id[txt_index])
-                    shuju_data.txt_title.append(info_title[txt_index])
-                    shuju_data.txt_video.append(info_video[txt_index])
-                    shuju_data.txt_area.append(info_area[txt_index])
-                    shuju_data.txt_time.append(info_time[txt_index])
                     #添加数据到爆料列表中去
                     if info_video[txt_index] != '0':
+                        shuju_data.txt_id.append(info_id[txt_index])
+                        shuju_data.txt_title.append(info_title[txt_index])
+                        shuju_data.txt_video.append(info_video[txt_index])
+                        shuju_data.txt_area.append(info_area[txt_index])
+                        shuju_data.txt_time.append(info_time[txt_index])
                         shuju_data.biaoti.append(info_title[txt_index])
                         shuju_data.lanmu.append('0')
                         shuju_data.jizhe.append('0')
