@@ -3,6 +3,8 @@ import requests,queue
 from requests.packages import urllib3
 from urllib.parse import urlencode
 text = [1]
+#微信安装路径
+wechet_lujian = ''
 #队列
 queue = queue.Queue()
 #从urllib3中消除警告

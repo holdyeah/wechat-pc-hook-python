@@ -4,13 +4,15 @@ import random,json
 
 #判断write.txt是否有内容，无则写入一条内容，有则不写入
 def write_txt():
+    #微信read.txt目录
+    wx_filename = shuju_data.wechet_lujian+'\\write.txt'
     #print("判断txt写入")
-    txt_open = open('C:/Program Files (x86)/Tencent/WeChat/write.txt','r')
+    txt_open = open(wx_filename,'r')
     txt = txt_open.read()
     txt_open.close()
     if(txt == ''):
         print("写入txt")
-        data = open('C:/Program Files (x86)/Tencent/WeChat/write.txt','w+')
+        data = open(wx_filename,'w+')
         txt_data1 = shuju_data.txt_title[0]
         #判断有没有视频
         txt_data2 = ""

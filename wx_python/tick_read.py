@@ -4,7 +4,7 @@ import shuju_data,webBaoLiao
 def tick_read():
     print('扫描微信read.txt内是否有匹配的数据')
     #微信read.txt目录
-    wx_filename = 'C:\\Program Files (x86)\\Tencent\\WeChat\\read.txt'
+    wx_filename = shuju_data.wechet_lujian+'\\read.txt'
     #获取当前工作的父目录 的raw_data目录
     copy_filename = os.path.abspath('.') + '\\raw_data\\'
     #复制read.txt到cpoy_filename路径
