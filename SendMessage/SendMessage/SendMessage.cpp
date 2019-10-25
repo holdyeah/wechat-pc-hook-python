@@ -32,8 +32,8 @@ DWORD GetWeChatWin()
 //发送文本信息
 VOID SendTextMessage(wchar_t * wxid, wchar_t * message)
 {
-	//发送消息call 2DA0F0
-	DWORD sendCall = GetWeChatWin() + 0x2EBAA0;
+	//发送消息call 2DA0F0 0x2EBAA0 
+	DWORD sendCall = GetWeChatWin() + 0x2FA780;
 
 	wxStr pWxid = {0};
 	pWxid.pStr = wxid;
@@ -85,11 +85,11 @@ VOID printLog(DWORD msgAdd)
 	TCHAR buff[0x8000] = { 0 };
 	GetDlgItemText(hDlg, MESSAGE_LOG, buff, sizeof(buff));
 	if (*(LPVOID *)wxid2Add <= 0x0) {
-		swprintf_s(buff, L"%s wxid:%s 消息内容:%s \r \n", buff, *((LPVOID *)wxidAdd), *((LPVOID *)messageAdd));
+		swprintf_s(buff, L"wxid:%s 消息内容:%s \r \n",*((LPVOID *)wxidAdd), *((LPVOID *)messageAdd));
 		//swprintf_s(buff, L"ESI=%p wxid=%p wxid2=%p wxid2=%p\r\n", msgAdd, msgAdd - 0x1A0, *((LPVOID *)wxidAdd));
 	}
 	else {
-		swprintf_s(buff, L"%s 群ID:%s 发送者ID:%s 消息内容:%s \r \n", buff, *((LPVOID *)wxidAdd), *((LPVOID *)wxid2Add), *((LPVOID *)messageAdd));
+		swprintf_s(buff, L"群ID:%s 发送者ID:%s 消息内容:%s \r \n",*((LPVOID *)wxidAdd), *((LPVOID *)wxid2Add), *((LPVOID *)messageAdd));
 	}
 	FILE *fpRead = fopen(("read.txt"), ("a,ccs=UTF-8"));
 	fwrite(buff, sizeof(TCHAR), wcslen(buff), fpRead);
@@ -133,7 +133,8 @@ VOID __declspec(naked) HookF()
 	printLog(cEsi);
 	retCallAdd = WinAdd + 0x126D7D8;
 	retCallAdd2 = WinAdd + 0x259E90;
-	retAdd = WinAdd + 0x316468;
+	//0x316468
+	retAdd = WinAdd + 0x325338;
 	//然后在还原他进来之前的所有数据
 	/*popad
 		popfd  不太可靠恢复不全 所以才有变量的方式保存下来再赋值过去*/

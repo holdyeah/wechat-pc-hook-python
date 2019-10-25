@@ -6,6 +6,7 @@
 #include <string.h>
 #include "resource.h"
 #include "SendMessage.h"
+#define MAX_LINE 1024
 DWORD ThreadProc(HMODULE hModule);
 INT_PTR CALLBACK DialogProc(_In_ HWND hwndDlg, _In_ UINT uMsg, _In_ WPARAM wParam, _In_ LPARAM lParam);
 BOOL RegisterWindow(HMODULE hModule);
@@ -42,7 +43,8 @@ DWORD ThreadProc(HMODULE hModule)
 
 INT_PTR CALLBACK DialogProc(_In_ HWND hwndDlg, _In_ UINT uMsg, _In_ WPARAM wParam, _In_ LPARAM lParam)
 {	
-	DWORD hookAdd = GetWeChatWin() + 0x316463;
+	//0x316463
+	DWORD hookAdd = GetWeChatWin() + 0x325333;
 	switch (uMsg)
 	{
 	case WM_INITDIALOG:
@@ -83,8 +85,10 @@ BOOL RegisterWindow(HMODULE hModule)
 	{
 		while (isbool >= 1)
 		{
+			char buf[MAX_LINE];  /*缓冲区*/
 			//写入write.txt
 			char szTest[1000] = { 0 };
+			int len = 0;
 			wchar_t messagetxt[0x300] = { 0 };
 			FILE *fp = fopen("write.txt", "r");
 			if (NULL == fp)
@@ -93,14 +97,19 @@ BOOL RegisterWindow(HMODULE hModule)
 			}
 			else
 			{
-				memset(szTest, 0, sizeof(szTest));
-				fgets(szTest, sizeof(szTest) - 1, fp); // 包含了换行符 
+				while (fgets(buf, MAX_LINE, fp) != NULL)
+				{
+					strcat(szTest, buf);
+				}
+				//memset(szTest, 0, sizeof(szTest));
+				//fgets(szTest, sizeof(szTest) - 1, fp); // 包含了换行符
 				SendTextMessage(wxid, char2wchar(szTest));
 				fclose(fp);
 				FILE *fp1 = fopen("write.txt", "w");
 				fclose(fp1);
 			}
-			//Sleep(50000);
+			fclose(fp);
+			Sleep(5000);
 			//MessageBox(NULL, L"test", L"错误", 0);
 		}
 		
