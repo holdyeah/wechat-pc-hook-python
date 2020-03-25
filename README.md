@@ -7,7 +7,7 @@ hookpc微信客户端的发消息和收信息,运用python自动化收发消息
 微信的版本：~~2.6.8.56(2.6.8.56版本发消息call偏移是0x316463)~~   
 ~~2.7.1.82(2.7.1.82版本发消息call偏移是0x2FA780)~~   
 2.8.0.133(2.8.0.133版本发消息call偏移是)
-
+s
 开发环境：VS2017使用C++的桌面开发,python3.7.3 32位(备注：64位python可能无法注入dll到微信)   
 
 如何运行：在TeachDemos\Debug\下找到TeachDemos.exe以管理员运行,TeachDemos.exe(默认微信路径是)会加载同目录下的SendMessage.dll到微信中去    
