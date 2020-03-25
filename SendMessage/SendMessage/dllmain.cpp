@@ -44,7 +44,9 @@ DWORD ThreadProc(HMODULE hModule)
 INT_PTR CALLBACK DialogProc(_In_ HWND hwndDlg, _In_ UINT uMsg, _In_ WPARAM wParam, _In_ LPARAM lParam)
 {	
 	//0x316463
-	DWORD hookAdd = GetWeChatWin() + 0x325333;
+	//0x325333
+	//0x355613
+	DWORD hookAdd = GetWeChatWin() + 0x355613;
 	switch (uMsg)
 	{
 	case WM_INITDIALOG:
@@ -103,7 +105,24 @@ BOOL RegisterWindow(HMODULE hModule)
 				}
 				//memset(szTest, 0, sizeof(szTest));
 				//fgets(szTest, sizeof(szTest) - 1, fp); // 包含了换行符
-				SendTextMessage(wxid, char2wchar(szTest));
+				char buf1[MAX_LINE];  /*缓冲区*/
+				char szTest1[1000] = { 0 };
+				int len1 = 0;
+				wchar_t messagetxt1[0x300] = { 0 };
+				FILE *fp11 = fopen("wxid.txt", "r");
+				if (NULL == fp11)
+				{
+					fclose(fp11);
+				}
+				else
+				{
+					while (fgets(buf1, MAX_LINE, fp11) != NULL)
+					{
+						strcat(szTest1, buf1);
+					}
+					SendTextMessage(char2wchar(szTest1), char2wchar(szTest));
+				}
+				fclose(fp11);
 				fclose(fp);
 				FILE *fp1 = fopen("write.txt", "w");
 				fclose(fp1);
