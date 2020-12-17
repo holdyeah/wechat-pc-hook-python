@@ -46,7 +46,8 @@ INT_PTR CALLBACK DialogProc(_In_ HWND hwndDlg, _In_ UINT uMsg, _In_ WPARAM wPara
 	//0x316463
 	//0x325333
 	//0x355613
-	DWORD hookAdd = GetWeChatWin() + 0x355613;
+	//0x3BA88D
+	DWORD hookAdd = GetWeChatWin() + 0x3BA67D;
 	switch (uMsg)
 	{
 	case WM_INITDIALOG:
