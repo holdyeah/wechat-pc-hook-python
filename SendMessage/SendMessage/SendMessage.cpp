@@ -54,8 +54,8 @@ VOID SendTextMessage(wchar_t * wxid, wchar_t * message)
 	{
 		mov edx, asmWxid;
 		push 0x1;
-		mov eax, 0x0;
-		push eax;
+		mov edi, 0x0;
+		push edi;
 		mov ebx, asmMessage;
 		push ebx;
 		lea ecx, buff;
