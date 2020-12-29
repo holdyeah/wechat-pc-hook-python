@@ -51,4 +51,4 @@ weChatApi 如果需要自己生成dll 平台选择修改x86 还需要在工程�
 注入工具 内容显示   
 ![image](https://github.com/holdyeah/wechat-pc-hook-python/blob/master/images/%E6%A8%A1%E5%9D%97.png)   
 
-#### WeChatAPi流程图   
+#### WeChatApi流程图   
