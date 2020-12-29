@@ -32,7 +32,7 @@ wxid.txt 存放微信id
 在大佬https://github.com/wsbblyy/wechat-pc-hook-api 的发消息api基础上增加了自己的一个传递出接收文本消息GET   
 testwechatrecvmessage.py是一个接收测试demo(需要安装模块 flask)   
 testwechatsendmessage.py是一个发消息测试demo   
-weChatApi 如果需要自己生成dll 平台选择修改x86 还需要在工程配置修改以下几个地方
+weChatApi自己生成了一个dll 如果需要自己生成dll 平台选择修改x86 还需要在工程配置修改以下几个地方
 ```
 1、选择左边VC++ 目录，在右边包含目录添加$(ProjectDir)\libcurl-vc15-x86\include;
 库目录添加$(ProjectDir)\libcurl-vc15-x86\lib;   
