@@ -39,7 +39,9 @@ weChatApi 如果需要自己生成dll 平台选择修改x86 还需要在工程�
 3、链接器->输入->附加依赖项：添加libcurl_a.lib;Ws2_32.lib;Wldap32.lib;winmm.lib;Crypt32.lib;Normaliz.lib;   
 (参考：https://blog.csdn.net/cnicfhnui/article/details/106955806)    
 ```
-操作说明：TeachDemos.exe 或 python_hook.py 注入 weChatApi.dll,注入后自动开启HTTP服务
+操作说明：TeachDemos.exe 或 python_hook.py 注入 weChatApi.dll,注入后自动开启HTTP服务    
+运行testwechatrecvmessage.py即可接受到消息    
+修改里面的wxid_****运行testwechatsendmessage.py即可发文本消息    
 
 # 结构说明
 
