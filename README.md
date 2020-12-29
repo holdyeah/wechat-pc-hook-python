@@ -16,7 +16,7 @@ hookpc微信客户端的发消息和收消息,运用python自动化收发消息
 
 如何运行：在TeachDemos\Debug\下找到TeachDemos.exe以管理员运行,TeachDemos.exe(默认微信路径是)会加载同目录下的SendMessage.dll到微信中去    
 
-或者修改python_hook.py(python注入器)内的dll_path路径运行python_hook.py 可以注入dll到微信中去   
+或者修改python_hook.py(python注入器 需要安装模块 psutil ctypes-callable pywin32)内的dll_path路径运行python_hook.py 可以注入dll到微信中去   
 
 ## SendMessage的DLL版本说明
 大神的https://github.com/hedada-hc/pc_wechat_hook    
@@ -28,8 +28,16 @@ wxid.txt 存放微信id
 大的框是实时信息获取的状态框，内容同时也写入到read.txt中去   
 操作方法：先点击获取信息 然后在id/wxid 填写数据 然后点击发送消息即可   
 
-## WeChatAPi的DLL版本说明
+## WeChatApi的DLL版本说明
 在大佬https://github.com/wsbblyy/wechat-pc-hook-api 的发消息api基础上增加了自己的一个传递出接收文本消息GET   
+testwechatrecvmessage.py是一个接收测试demo(需要安装模块 flask)   
+testwechatsendmessage.py是一个发消息测试demo   
+weChatApi 如果需要自己生成dll 平台选择修改x86 还需要在工程配置修改以下几个地方   
+    1、选择左边VC++ 目录，在右边包含目录添加$(ProjectDir)\libcurl-vc15-x86\include;，库目录添加$(ProjectDir)\libcurl-vc15-x86\lib;   
+    2、选择C/C++->预处理器->预处理器定义：添加CURL_STATICLIB   
+    3、链接器->输入->附加依赖项：添加libcurl_a.lib;Ws2_32.lib;Wldap32.lib;winmm.lib;Crypt32.lib;Normaliz.lib;   
+    (参考：https://blog.csdn.net/cnicfhnui/article/details/106955806)
+操作说明：TeachDemos.exe 或 python_hook.py 注入 weChatApi.dll,注入后自动开启HTTP服务
 
 # 结构说明
 
@@ -37,4 +45,5 @@ wxid.txt 存放微信id
 ![image](https://github.com/holdyeah/wechat-pc-hook-python/blob/master/images/%E8%AF%B4%E6%98%8E.png)   
 注入工具 内容显示   
 ![image](https://github.com/holdyeah/wechat-pc-hook-python/blob/master/images/%E6%A8%A1%E5%9D%97.png)   
+
 ## WeChatAPi流程图   
