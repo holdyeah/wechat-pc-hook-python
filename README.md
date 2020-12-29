@@ -33,10 +33,12 @@ wxid.txt 存放微信id
 testwechatrecvmessage.py是一个接收测试demo(需要安装模块 flask)   
 testwechatsendmessage.py是一个发消息测试demo   
 weChatApi 如果需要自己生成dll 平台选择修改x86 还需要在工程配置修改以下几个地方   
+```
     1、选择左边VC++ 目录，在右边包含目录添加$(ProjectDir)\libcurl-vc15-x86\include;，库目录添加$(ProjectDir)\libcurl-vc15-x86\lib;   
     2、选择C/C++->预处理器->预处理器定义：添加CURL_STATICLIB   
     3、链接器->输入->附加依赖项：添加libcurl_a.lib;Ws2_32.lib;Wldap32.lib;winmm.lib;Crypt32.lib;Normaliz.lib;   
     (参考：https://blog.csdn.net/cnicfhnui/article/details/106955806)    
+```
 操作说明：TeachDemos.exe 或 python_hook.py 注入 weChatApi.dll,注入后自动开启HTTP服务
 
 # 结构说明
