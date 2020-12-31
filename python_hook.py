@@ -10,22 +10,21 @@ dll_path = b"C:\SendMessage.dll"
 print(dll_path)
 dll_len = len(dll_path)
 kernel32 = ctypes.windll.kernel32
-#第一步获取整个系统的进程快照
-pids = psutil.pids()
-#第二步在快照中去比对进程名
-for pid in pids:
-    p= psutil.Process(pid)
-    #print(p.name())
-    if p.name()=='WeChat.exe':
-        print('%x'%pid)
-        break
-    else:
-        pid = 0
+#第一步获取整个系统的进程快照 第二步在快照中去比对进程名
+for proc in psutil.process_iter():
+    try:
+        if proc.name() == 'WeChat.exe':
+            print(proc)
+            break
+        else:
+            proc = 0
+    except (psutil.AccessDenied, psutil.NoSuchProcess):
+        print ("无 Permission or process")
 #第三步用找到的pid去打开进程获取到句柄
-if pid == 0:
+if proc == 0:
     print("没有找到微信或者微信没有启动")
 else:
-    h_process=kernel32.OpenProcess(PROCESS_ALL_ACCESS,False,(pid))
+    h_process=kernel32.OpenProcess(PROCESS_ALL_ACCESS,False,(proc.pid))
     print('%x'%h_process)
     if not h_process:
         print('进程打开失败权限不足')
