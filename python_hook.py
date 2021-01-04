@@ -6,7 +6,7 @@ from ctypes import *
 PAGE_READWRITE = 0x00000040
 PROCESS_ALL_ACCESS =  (0x000F0000|0x00100000|0xFFF)
 VIRTUAL_MEM = (0x00001000 | 0x00002000)
-dll_path = b"C:\SendMessage.dll"
+dll_path = b"C:\\SendMessage.dll"
 print(dll_path)
 dll_len = len(dll_path)
 kernel32 = ctypes.windll.kernel32
