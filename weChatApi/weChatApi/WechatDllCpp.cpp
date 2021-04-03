@@ -1,4 +1,4 @@
-﻿#include "pch.h"
+#include "pch.h"
 #include <Windows.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -72,7 +72,9 @@ VOID SendTextMessage(wchar_t * wxid, wchar_t * message)
 	char buff[0x880] = { 0 };
 
 	//call地址
-	DWORD callAdd = getModuleAddress() + 0x38D8A0;
+	//消息发送 3.0.0.57 0x38D8A0
+	//消息发送 3.2.1.127 0x3B56A0
+	DWORD callAdd = getModuleAddress() + 0x3B56A0;
 	__asm {
 		mov edx, asmWxid
 		push 0x1
@@ -170,8 +172,10 @@ VOID __declspec(naked) HookF()
 		pushfd
 	}
 	//然后跳转到我们自己的处理函数 想干嘛干嘛
-	printLog(cEsi);
-	retAdd = WinAdd + 0x3BA682;
+	//消息接收 3.0.0.57 WinAdd + 0x3BA682 cesi
+	//消息接收 3.2.1.127 WinAdd + 0x3E1FDA cEdi
+	printLog(cEdi);
+	retAdd = WinAdd + 0x3E1FDA;
 	__asm {
 		popfd
 		popad
@@ -195,7 +199,8 @@ VOID StartHook(DWORD hookAdd, LPVOID jmpAdd)
 VOID HookWechatRead()
 {
 	//消息接收 3.0.0.57 0x3BA67D
-	hookAdd = getModuleAddress() + 0x3BA67D;
+	//消息接收 3.2.1.127 0x3E1FD5
+	hookAdd = getModuleAddress() + 0x3E1FD5;
 	hWHND = OpenProcess(PROCESS_ALL_ACCESS, NULL, GetCurrentProcessId());
 	WinAdd = getModuleAddress();
 	StartHook(hookAdd, &HookF);
