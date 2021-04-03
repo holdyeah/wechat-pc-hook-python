@@ -34,7 +34,7 @@ VOID SendTextMessage(wchar_t * wxid, wchar_t * message)
 {
 	//发送消息call 2DA0F0 0x2EBAA0  2FA780 0x32A760 38DAB0 38D8A0
 	//
-	DWORD sendCall = GetWeChatWin() + 0x38D8A0;
+	DWORD sendCall = GetWeChatWin() + 0x3B56A0;
 
 	wxStr pWxid = {0};
 	pWxid.pStr = wxid;
@@ -133,12 +133,13 @@ VOID __declspec(naked) HookF()
 		pushfd
 	}
 	//然后跳转到我们自己的处理函数 想干嘛干嘛
-	printLog(cEsi);
+	printLog(cEdi);
 	//0x316468
 	//0x325338
 	//0x355618
 	//0x3BA892
-	retAdd = WinAdd + 0x3BA682;
+	//0x3BA682
+	retAdd = WinAdd + 0x3E1FDA;
 	//然后在还原他进来之前的所有数据
 	/*popad
 		popfd  不太可靠恢复不全 所以才有变量的方式保存下来再赋值过去*/
