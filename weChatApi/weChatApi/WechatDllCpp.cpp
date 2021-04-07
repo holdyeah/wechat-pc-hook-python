@@ -120,9 +120,10 @@ VOID SendFileMessage(wchar_t * wxid, wchar_t * filepath1)
 	wchar_t filepath[0x100] = L"";
 	swprintf(filepath,L"%s", filepath1);
 
+	//文件消息发送 3.2.1.127
+	//516B0000 wechatwin
 	//push 17DAB00
 	//call 58CBC0
-	//516B0000 wechatwin
 	//call 58 CC00
 	//call 58 CC00
 	//call 6 8A40
