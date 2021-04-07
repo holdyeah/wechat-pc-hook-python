@@ -21,6 +21,7 @@ for proc in psutil.process_iter():
     except (psutil.AccessDenied, psutil.NoSuchProcess):
         print ("无 Permission or process")
 #第三步用找到的pid去打开进程获取到句柄
+
 if proc == 0:
     print("没有找到微信或者微信没有启动")
 else:
