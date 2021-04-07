@@ -17,7 +17,7 @@ hookpc微信客户端的发消息和收消息,运用python自动化收发消息
 
 如何运行：在TeachDemos\Debug\下找到TeachDemos.exe以管理员运行,TeachDemos.exe(默认微信路径是)会加载同目录下的SendMessage.dll到微信中去    
 
-或者修改python_hook.py(python注入器 需要安装模块 psutil ctypes-callable pywin32)内的dll_path路径运行python_hook.py 可以注入dll到微信中去（运行需要管理员cmd或者powershell，目前测试了win7，win10，winser 2019都需要管理员权限运行）   
+或者修改python_hook.py(python注入器 需要安装模块 psutil ctypes-callable pywin32)内的dll_path路径运行python_hook.py 可以注入dll到微信中去（还有一些bug 运行需要管理员cmd或者powershell，目前测试了win7，win10，winser 2019都需要管理员权限运行）   
 
 #### SendMessage的DLL版本说明
 大神的https://github.com/hedada-hc/pc_wechat_hook    
