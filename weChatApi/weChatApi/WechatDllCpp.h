@@ -1,5 +1,5 @@
 #pragma once
 
-wchar_t * UTF8ToUnicode(const char* str);
 VOID SendTextMessage(wchar_t * wxid, wchar_t * message);
+VOID SendFileMessage(wchar_t * wxid, wchar_t * filepath1);
 VOID HookWechatRead();

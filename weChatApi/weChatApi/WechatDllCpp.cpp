@@ -1,4 +1,4 @@
-#include "pch.h"
+﻿#include "pch.h"
 #include <Windows.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -52,7 +52,9 @@ DWORD getModuleAddress()
 	return (DWORD)LoadLibrary(L"WeChatWin.dll");
 }
 
-
+/*
+======================发文本消息============================
+*/
 //发送文本消息函数
 VOID SendTextMessage(wchar_t * wxid, wchar_t * message)
 {
@@ -88,6 +90,105 @@ VOID SendTextMessage(wchar_t * wxid, wchar_t * message)
 	}
 	
 }
+
+
+
+
+/*
+======================发文件消息============================
+*/
+//微信ID的结构体
+struct Wxid
+{
+	wchar_t* str;
+	int strLen = 0;
+	int maxLen = 0;
+	char file[0x8] = { 0 };
+};
+
+struct filePath
+{
+	wchar_t* str;
+	int strLen = 0;
+	int maxLen = 0;
+	char file[0x18] = { 0 };
+};
+//发送文件call调用
+VOID SendFileMessage(wchar_t * wxid, wchar_t * filepath1)
+{
+	//wchar_t wxid[0x100] = L"filehelper";
+	wchar_t filepath[0x100] = L"";
+	swprintf(filepath,L"%s", filepath1);
+
+	//push 17DAB00
+	//call 58CBC0
+	//516B0000 wechatwin
+	//call 58 CC00
+	//call 58 CC00
+	//call 6 8A40
+	//call 2C 0BE0
+	//构造需要的地址
+	DWORD dwBase = getModuleAddress();
+	DWORD dwParams = dwBase + 0x17DAB00;
+	DWORD dwCall0 = dwBase + 0x58CC00;
+	DWORD dwCall1 = dwBase + 0x58CBC0;
+	DWORD dwCall2 = dwBase + 0x58CC00;
+	DWORD dwCall3 = dwBase + 0x68A40;	//组合数据
+	DWORD dwCall4 = dwBase + 0x2C0BE0;	//发送消息
+
+
+	char buff[0x45C] = { 0 };
+
+	//构造需要的数据
+	Wxid wxidStruct = { 0 };
+	wxidStruct.str = wxid;
+	wxidStruct.strLen = wcslen(wxid);
+	wxidStruct.maxLen = wcslen(wxid) * 2;
+
+	filePath filePathStruct = { 0 };
+	filePathStruct.str = filepath;
+	filePathStruct.strLen = wcslen(filepath);
+	filePathStruct.maxLen = wcslen(filepath) * 2;
+
+	//取出需要的数据的地址
+	char* pFilePath = (char*)&filePathStruct.str;
+	char* pWxid = (char*)&wxidStruct.str;
+
+	__asm {
+		pushad
+		mov eax, 0x1;
+		cmovne ecx, eax;
+		sub esp, 0x14;
+		mov byte ptr ss : [ebp - 0x6C], cl;
+		lea eax, dword ptr ds : [edi - 0x20];
+		mov ecx, esp;
+		mov dword ptr ss : [ebp - 0x44], esp;
+		push eax;
+		call dwCall0;
+		push dword ptr ss : [ebp - 0x6C];
+		sub esp, 0x14;
+		mov ecx, esp;
+		push - 0x1;
+		push dwParams;
+		call dwCall1;
+		sub esp, 0x14;
+		mov ecx, esp;
+		push pFilePath;
+		call dwCall2;
+		sub esp, 0x14;
+		lea eax, dword ptr ss : [ebp - 0x88];
+		mov ecx, esp;
+		push pWxid;
+		call dwCall2;
+		lea eax, buff;
+		push eax;
+		call dwCall3;
+		mov ecx, eax;
+		call dwCall4;
+		popad
+	}
+
+};
 
 
 /*

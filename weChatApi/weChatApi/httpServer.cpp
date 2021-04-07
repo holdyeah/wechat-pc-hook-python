@@ -45,6 +45,29 @@ static void send(struct mg_connection *nc, struct http_message *hm) {
 	mg_send_http_chunk(nc, "", 0); /* Send empty chunk, the end of response */
 }
 
+static void filesend(struct mg_connection *nc, struct http_message *hm) {
+	wchar_t wxid[0x100], msg[0x200];
+
+	char buf_wxid[0x100], buf_msg[0x200];
+
+	/* Get form variables */
+	mg_get_http_var(&hm->body, "wxid", buf_wxid, sizeof(buf_wxid));
+	mg_get_http_var(&hm->body, "msg", buf_msg, sizeof(buf_msg));
+
+	wcscpy_s(wxid, UTF8ToUnicode(buf_wxid));
+	wcscpy_s(msg, UTF8ToUnicode(buf_msg));
+
+	SendFileMessage(wxid, msg);
+
+	/* Send headers */
+	mg_printf(nc, "%s", "HTTP/1.1 200 OK\r\nTransfer-Encoding: chunked\r\n\r\n");
+
+	/* Compute the result and send it back as a JSON object */
+	//result = strtod(n1, NULL) + strtod(n2, NULL);
+	mg_printf_http_chunk(nc, "{ \"wxid\": %s, \"msg\": %s}", buf_wxid, buf_msg);
+	mg_send_http_chunk(nc, "", 0); /* Send empty chunk, the end of response */
+}
+
 static void ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
 	struct http_message *hm = (struct http_message *) ev_data;
 
@@ -52,6 +75,9 @@ static void ev_handler(struct mg_connection *nc, int ev, void *ev_data) {
 	case MG_EV_HTTP_REQUEST:
 		if (mg_vcmp(&hm->uri, "/send") == 0) {
 			send(nc, hm); /* Handle RESTful call */
+		}
+		else if (mg_vcmp(&hm->uri, "/file") == 0) {
+			filesend(nc, hm); /* Handle RESTful call */
 		}
 		else if (mg_vcmp(&hm->uri, "/printcontent") == 0) {
 			char buf[100] = { 0 };

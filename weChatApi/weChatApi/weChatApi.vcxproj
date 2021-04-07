@@ -77,8 +77,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>D:\curl-7.74.0\builds\libcurl-vc15-x64-release-static-ipv6-sspi-schannel\include;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\curl-7.74.0\builds\libcurl-vc15-x64-release-static-ipv6-sspi-schannel\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\libcurl-vc15-x86\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\libcurl-vc15-x86\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
