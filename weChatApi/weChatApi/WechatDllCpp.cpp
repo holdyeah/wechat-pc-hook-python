@@ -67,16 +67,29 @@ VOID SendTextMessage(wchar_t * wxid, wchar_t * message)
 	pMessage.pStr = message;
 	pMessage.strLen = wcslen(message);
 	pMessage.iStrLen = wcslen(message) * 2;
+
 	char* asmWxid = (char*)&pWxid.pStr;
 	char* asmMsg = (char*)&pMessage.pStr;
 
 	//缓冲区
-	char buff[0x880] = { 0 };
+	char buff[0x5F0] = { 0 };
 
 	//call地址
-	//消息发送 3.0.0.57 0x38D8A0
+	//消息发送 3.0.0.57  0x38D8A0
 	//消息发送 3.2.1.127 0x3B56A0
-	DWORD callAdd = getModuleAddress() + 0x3B56A0;
+	//消息发送 3.3.0.84  0x3E3BF0
+	/*
+		mov edx, asmWxid
+		push 0x1
+		mov edi, 0x0
+		push edi
+		mov ebx, asmMsg
+		push ebx
+		lea ecx, buff
+		call callAdd
+		add esp, 0xC
+	*/
+	DWORD callAdd = getModuleAddress() + 0x3E3BF0;
 	__asm {
 		mov edx, asmWxid
 		push 0x1
@@ -120,23 +133,26 @@ VOID SendFileMessage(wchar_t * wxid, wchar_t * filepath1)
 	wchar_t filepath[0x100] = L"";
 	swprintf(filepath,L"%s", filepath1);
 
-	//文件消息发送 3.2.1.127
-	//516B0000 wechatwin
-	//push 17DAB00
-	//call 58CBC0
-	//call 58 CC00
-	//call 58 CC00
-	//call 6 8A40
-	//call 2C 0BE0
 	//构造需要的地址
-	DWORD dwBase = getModuleAddress();
+	//发文件消息 3.2.1.127
+	/*DWORD dwBase = getModuleAddress();
 	DWORD dwParams = dwBase + 0x17DAB00;
 	DWORD dwCall0 = dwBase + 0x58CC00;
 	DWORD dwCall1 = dwBase + 0x58CBC0;
 	DWORD dwCall2 = dwBase + 0x58CC00;
 	DWORD dwCall3 = dwBase + 0x68A40;	//组合数据
 	DWORD dwCall4 = dwBase + 0x2C0BE0;	//发送消息
+	*/
 
+	//构造需要的地址
+	//发文件消息 3.3.0.84
+	DWORD dwBase = getModuleAddress();
+	DWORD dwParams = dwBase + 0x19A62B0;
+	DWORD dwCall0 = dwBase + 0x5CCAA0;
+	DWORD dwCall1 = dwBase + 0x5CCA60;
+	DWORD dwCall2 = dwBase + 0x5CCAA0;
+	DWORD dwCall3 = dwBase + 0x74C60;	//组合数据
+	DWORD dwCall4 = dwBase + 0x2E25E0;	//发送消息
 
 	char buff[0x45C] = { 0 };
 
@@ -212,9 +228,9 @@ VOID printLog(DWORD msgAdd)
 {
 	//信息块的位置
 	DWORD* msgAddress = (DWORD *)msgAdd;
-	DWORD wxidAdd = (*msgAddress + 0x40);
-	DWORD wxid2Add = (*msgAddress + 0x150);
-	DWORD messageAdd = (*msgAddress + 0x68);
+	DWORD wxidAdd = (*msgAddress + 0x48);
+	DWORD wxid2Add = (*msgAddress + 0x170);
+	DWORD messageAdd = (*msgAddress + 0x70);
 	//TCHAR buff[0x8000] = { 0 };
 	TCHAR POSTFIELDS[0x8000] = { 0 };
 	if (*(LPVOID *)wxid2Add <= 0x0) {
@@ -276,8 +292,9 @@ VOID __declspec(naked) HookF()
 	//然后跳转到我们自己的处理函数 想干嘛干嘛
 	//消息接收 3.0.0.57 WinAdd + 0x3BA682 cesi
 	//消息接收 3.2.1.127 WinAdd + 0x3E1FDA cEdi
+	//消息接收 3.3.0.84 WinAdd + 0x41139A cEdi
 	printLog(cEdi);
-	retAdd = WinAdd + 0x3E1FDA;
+	retAdd = WinAdd + 0x41139A;
 	__asm {
 		popfd
 		popad
@@ -302,7 +319,8 @@ VOID HookWechatRead()
 {
 	//消息接收 3.0.0.57 0x3BA67D
 	//消息接收 3.2.1.127 0x3E1FD5
-	hookAdd = getModuleAddress() + 0x3E1FD5;
+	//消息接收 3.3.0.84 0x411395
+	hookAdd = getModuleAddress() + 0x411395;
 	hWHND = OpenProcess(PROCESS_ALL_ACCESS, NULL, GetCurrentProcessId());
 	WinAdd = getModuleAddress();
 	StartHook(hookAdd, &HookF);
