@@ -24,6 +24,7 @@ HANDLE hWHND = 0;
 DWORD WinAdd = 0;
 HWND hDlg = 0;
 DWORD hookAdd = 0;
+DWORD retWinAddRead = 0;
 DWORD retAdd = 0;
 BYTE backCode[HOOK_LEN] = { 0 };
 
@@ -72,12 +73,13 @@ VOID SendTextMessage(wchar_t * wxid, wchar_t * message)
 	char* asmMsg = (char*)&pMessage.pStr;
 
 	//缓冲区
-	char buff[0x5F0] = { 0 };
+	char buff[0x5F8] = { 0 };
 
 	//call地址
 	//消息发送 3.0.0.57  0x38D8A0
 	//消息发送 3.2.1.127 0x3B56A0
 	//消息发送 3.3.0.84  0x3E3BF0
+	//消息发送 3.3.5.50  0x406E10
 	/*
 		mov edx, asmWxid
 		push 0x1
@@ -89,14 +91,14 @@ VOID SendTextMessage(wchar_t * wxid, wchar_t * message)
 		call callAdd
 		add esp, 0xC
 	*/
-	DWORD callAdd = getModuleAddress() + 0x3E3BF0;
+	DWORD callAdd = getModuleAddress() + 0x406E10;
 	__asm {
 		mov edx, asmWxid
 		push 0x1
-		mov edi, 0x0
+		mov eax, 0x0
+		push eax
+		mov edi, asmMsg
 		push edi
-		mov ebx, asmMsg
-		push ebx
 		lea ecx, buff
 		call callAdd
 		add esp, 0xC
@@ -146,13 +148,24 @@ VOID SendFileMessage(wchar_t * wxid, wchar_t * filepath1)
 
 	//构造需要的地址
 	//发文件消息 3.3.0.84
-	DWORD dwBase = getModuleAddress();
+	/*DWORD dwBase = getModuleAddress();
 	DWORD dwParams = dwBase + 0x19A62B0;
 	DWORD dwCall0 = dwBase + 0x5CCAA0;
 	DWORD dwCall1 = dwBase + 0x5CCA60;
 	DWORD dwCall2 = dwBase + 0x5CCAA0;
 	DWORD dwCall3 = dwBase + 0x74C60;	//组合数据
 	DWORD dwCall4 = dwBase + 0x2E25E0;	//发送消息
+	*/
+
+	//构造需要的地址
+	//发文件消息 3.3.5.50
+	DWORD dwBase = getModuleAddress();
+	DWORD dwParams = dwBase + 0x18CE038;
+	DWORD dwCall0 = dwBase + 0x5F6440;
+	DWORD dwCall1 = dwBase + 0x5F6400;
+	DWORD dwCall2 = dwBase + 0x5F6440;
+	DWORD dwCall3 = dwBase + 0x8A6A0;	//组合数据
+	DWORD dwCall4 = dwBase + 0x30E2A0;	//发送消息
 
 	char buff[0x45C] = { 0 };
 
@@ -171,7 +184,8 @@ VOID SendFileMessage(wchar_t * wxid, wchar_t * filepath1)
 	char* pFilePath = (char*)&filePathStruct.str;
 	char* pWxid = (char*)&wxidStruct.str;
 
-	__asm {
+	//发文件消息 3.3.0.84
+	/*__asm {
 		pushad
 		mov eax, 0x1;
 		cmovne ecx, eax;
@@ -203,7 +217,42 @@ VOID SendFileMessage(wchar_t * wxid, wchar_t * filepath1)
 		mov ecx, eax;
 		call dwCall4;
 		popad
+	}*/
+	//发文件消息 3.3.5.50
+	__asm {
+		pushad
+		sub esp, 0x14;
+		lea eax, dword ptr ds : [edi + 0x14];
+		mov ecx, esp;
+		mov dword ptr ss : [ebp - 0x48], esp;
+		push eax;
+		call dwCall0;
+		push dword ptr ss : [ebp - 0x70];
+		sub esp, 0x14;
+		mov ecx, esp;
+		mov dword ptr ss : [ebp - 0x78], esp;
+		push - 0x1;
+		push dwParams;
+		call dwCall1;
+		sub esp, 0x14;
+		mov ecx, esp;
+		mov dword ptr ss : [ebp - 0x7C], esp;
+		push pFilePath;
+		call dwCall2;
+		sub esp, 0x14;
+		lea eax, dword ptr ss : [ebp - 0x90];
+		mov ecx, esp;
+		mov dword ptr ss : [ebp - 0x54], esp;
+		push pWxid;
+		call dwCall2;
+		lea eax, buff;
+		push eax;
+		call dwCall3;
+		mov ecx, eax;
+		call dwCall4;
+		popad
 	}
+
 
 };
 
@@ -285,19 +334,28 @@ VOID __declspec(naked) HookF()
 		mov cEbp, ebp
 		mov cEsi, esi
 		mov cEdi, edi
-
-		pushad
-		pushfd
 	}
 	//然后跳转到我们自己的处理函数 想干嘛干嘛
-	//消息接收 3.0.0.57 WinAdd + 0x3BA682 cesi
+	//消息接收 3.0.0.57  WinAdd + 0x3BA682 cEsi
 	//消息接收 3.2.1.127 WinAdd + 0x3E1FDA cEdi
-	//消息接收 3.3.0.84 WinAdd + 0x41139A cEdi
-	printLog(cEdi);
-	retAdd = WinAdd + 0x41139A;
+	//消息接收 3.3.0.84  WinAdd + 0x41139A cEdi
+	//消息接收 3.3.5.50  WinAdd + 0x344C24 cEsp
+	printLog(cEsp);
+	retWinAddRead = WinAdd + 0x3E0210;
+	retAdd = WinAdd + 0x344C24;
 	__asm {
-		popfd
-		popad
+		mov eax, cEax
+		mov ecx, cEcx
+		mov edx, cEdx
+		mov ebx, cEbx
+		mov esp, cEsp
+		mov ebp, cEbp
+		mov esi, cEsi
+		mov edi, cEdi
+	}
+	__asm {
+		call retWinAddRead
+		lea ecx, dword ptr ss : [ebp - 0x48]
 		jmp retAdd
 	}
 }
@@ -317,10 +375,11 @@ VOID StartHook(DWORD hookAdd, LPVOID jmpAdd)
 
 VOID HookWechatRead()
 {
-	//消息接收 3.0.0.57 0x3BA67D
+	//消息接收 3.0.0.57  0x3BA67D
 	//消息接收 3.2.1.127 0x3E1FD5
-	//消息接收 3.3.0.84 0x411395
-	hookAdd = getModuleAddress() + 0x411395;
+	//消息接收 3.3.0.84  0x411395
+	//消息接收 3.3.5.50  0x344C1C
+	hookAdd = getModuleAddress() + 0x344C1C;
 	hWHND = OpenProcess(PROCESS_ALL_ACCESS, NULL, GetCurrentProcessId());
 	WinAdd = getModuleAddress();
 	StartHook(hookAdd, &HookF);
