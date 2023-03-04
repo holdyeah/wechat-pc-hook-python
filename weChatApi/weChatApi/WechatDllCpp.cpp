@@ -73,7 +73,7 @@ VOID SendTextMessage(wchar_t * wxid, wchar_t * message)
 	char* asmMsg = (char*)&pMessage.pStr;
 
 	//缓冲区
-	char buff[0x5F8] = { 0 };
+	char buff[0x3D8] = {0};
 
 	//call地址
 	//消息发送 3.0.0.57  0x38D8A0
@@ -91,17 +91,31 @@ VOID SendTextMessage(wchar_t * wxid, wchar_t * message)
 		call callAdd
 		add esp, 0xC
 	*/
-	DWORD callAdd = getModuleAddress() + 0x406E10;
+	//消息发送 3.9.0.28  0xC71A60
+	/*
+		mov edx, asmWxid
+		push 0x1
+		push eax
+		mov eax, 0x0
+		push eax
+		mov eax, asmMsg
+		push eax
+		lea ecx, buff2
+		call callAdd
+		add esp, 0x10
+	*/
+	DWORD callAdd = getModuleAddress() + 0xC71A60;
 	__asm {
 		mov edx, asmWxid
 		push 0x1
+		push eax
 		mov eax, 0x0
 		push eax
-		mov edi, asmMsg
-		push edi
+		mov eax, asmMsg
+		push eax
 		lea ecx, buff
 		call callAdd
-		add esp, 0xC
+		add esp, 0x10
 	}
 	
 }
@@ -276,10 +290,16 @@ char* UnicodeToChar(const wchar_t* unicode)
 VOID printLog(DWORD msgAdd)
 {
 	//信息块的位置
+	/*
 	DWORD* msgAddress = (DWORD *)msgAdd;
 	DWORD wxidAdd = (*msgAddress + 0x48);
 	DWORD wxid2Add = (*msgAddress + 0x170);
 	DWORD messageAdd = (*msgAddress + 0x70);
+	*/
+	DWORD msgAddress = (DWORD )msgAdd;
+	DWORD wxidAdd = (msgAddress + 0x48);
+	DWORD wxid2Add = (msgAddress + 0x170);
+	DWORD messageAdd = (msgAddress + 0x70);
 	//TCHAR buff[0x8000] = { 0 };
 	TCHAR POSTFIELDS[0x8000] = { 0 };
 	if (*(LPVOID *)wxid2Add <= 0x0) {
@@ -339,10 +359,11 @@ VOID __declspec(naked) HookF()
 	//消息接收 3.0.0.57  WinAdd + 0x3BA682 cEsi
 	//消息接收 3.2.1.127 WinAdd + 0x3E1FDA cEdi
 	//消息接收 3.3.0.84  WinAdd + 0x41139A cEdi
-	//消息接收 3.3.5.50  WinAdd + 0x344C24 cEsp
-	printLog(cEsp);
-	retWinAddRead = WinAdd + 0x3E0210;
-	retAdd = WinAdd + 0x344C24;
+	//消息接收 3.3.5.50  WinAdd + 0x344C24 cEsp lea ecx, dword ptr ss : [ebp - 0x48]
+	//消息接收 3.9.0.28  WinAdd + 0xC76E0F cEdi mov byte ptr ss : [ebp - 0x4], 0x1
+	printLog(cEdi);
+	retWinAddRead = WinAdd + 0xED3BE0;
+	retAdd = WinAdd + 0xC76E0F;
 	__asm {
 		mov eax, cEax
 		mov ecx, cEcx
@@ -355,7 +376,7 @@ VOID __declspec(naked) HookF()
 	}
 	__asm {
 		call retWinAddRead
-		lea ecx, dword ptr ss : [ebp - 0x48]
+		mov byte ptr ss : [ebp - 0x4], 0x1
 		jmp retAdd
 	}
 }
@@ -379,7 +400,8 @@ VOID HookWechatRead()
 	//消息接收 3.2.1.127 0x3E1FD5
 	//消息接收 3.3.0.84  0x411395
 	//消息接收 3.3.5.50  0x344C1C
-	hookAdd = getModuleAddress() + 0x344C1C;
+	//消息接收 3.9.0.28  0xC76E06
+	hookAdd = getModuleAddress() + 0xC76E06;
 	hWHND = OpenProcess(PROCESS_ALL_ACCESS, NULL, GetCurrentProcessId());
 	WinAdd = getModuleAddress();
 	StartHook(hookAdd, &HookF);
