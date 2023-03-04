@@ -3,7 +3,7 @@
 hookpc微信客户端的发消息和收消息,运用python自动化收发消息   
 
 基本功能：通过python注入dll到微信中，WeChatApi.dll功能(发文本消息api、接收文本消息GET、发文件消息api)   
-
+(ps: 如未安装vs2017开发工具，可以使用文件夹中的dll复制到C:\Windows\System32和C:\Windows\System32中)   
 微信的版本：   
 ~~2.6.8.56(2.6.8.56版本发消息call偏移是0x316463)~~   
 ~~2.7.1.82(2.7.1.82版本发消息call偏移是0x2FA780)~~   
